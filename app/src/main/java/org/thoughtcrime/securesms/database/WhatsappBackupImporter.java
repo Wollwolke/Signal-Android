@@ -90,6 +90,7 @@ public class WhatsappBackupImporter {
                     List<Attachment> attachments = WhatsappBackup.getMediaAttachments(whatsappDb, item);
                     if (attachments != null && attachments.size() > 0) insertMms(mmsDb, attachmentDb, item, recipient, threadId, attachments);
                 } else {
+                    if (item.getBody() == null) continue; //Ignore empty msgs for e.g. change of security numbers
                     if (avoidDuplicates && wasMsgAlreadyImported(smsDbTransaction, SmsDatabase.TABLE_NAME, SmsDatabase.DATE_SENT, threadId, recipient, item)) continue;
                     insertSms(smsDb, smsDbTransaction, item, recipient, threadId);
                 }
@@ -196,7 +197,7 @@ public class WhatsappBackupImporter {
         contentValues.put(DATE_RECEIVED, item.getDate());
         contentValues.put(PART_COUNT, 1);
         contentValues.put(SUBSCRIPTION_ID, -1);
-        contentValues.put(EXPIRES_IN, Long.MAX_VALUE);
+        contentValues.put(EXPIRES_IN, 0);
         contentValues.put(VIEW_ONCE, 0);
         contentValues.put(READ, 1);
         contentValues.put(UNIDENTIFIED, 0);
