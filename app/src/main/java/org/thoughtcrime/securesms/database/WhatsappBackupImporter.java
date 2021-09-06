@@ -7,7 +7,7 @@ import android.database.Cursor;
 
 import com.google.android.mms.pdu_alt.PduHeaders;
 
-import net.sqlcipher.database.SQLiteStatement;
+import net.zetetic.database.sqlcipher.SQLiteStatement;
 
 import org.signal.core.util.logging.Log;
 import org.thoughtcrime.securesms.attachments.Attachment;
@@ -163,13 +163,13 @@ public class WhatsappBackupImporter {
             if (threadRecipientId == null) return -1;
             try {
                 Recipient threadRecipient = Recipient.resolved(threadRecipientId);
-                threadId = threads.getThreadIdFor(threadRecipient);
+                threadId = threads.getOrCreateThreadIdFor(threadRecipient);
             } catch (Exception e) {
                 Log.v(TAG, "Group not found: " + item.getGroupName());
                 return -1;
             }
         } else {
-            threadId = threads.getThreadIdFor(recipient);
+            threadId = threads.getOrCreateThreadIdFor(recipient);
         }
         return threadId;
     }
