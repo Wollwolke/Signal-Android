@@ -67,7 +67,7 @@ public class WhatsappBackup {
                 if (c.moveToFirst()) {
                     do {
                         File storagePath = Environment.getExternalStorageDirectory();
-                        String filePath = storagePath.getAbsolutePath() + File.separator + "WhatsApp" + File.separator + c.getString(c.getColumnIndex("file_path"));
+                        String filePath = storagePath.getAbsolutePath() + File.separator + "Android/media/com.whatsapp/WhatsApp" + File.separator + c.getString(c.getColumnIndex("file_path"));
                         int size = c.getInt(c.getColumnIndex("file_size"));
                         String type = c.getString(c.getColumnIndex("mime_type"));
                         File file = new File(filePath);
@@ -149,7 +149,7 @@ public class WhatsappBackup {
     private String getGroupName(String keyRemoteJid) {
         try {
 
-            Cursor c = whatsappDb.rawQuery("SELECT subject FROM chat_list WHERE key_remote_jid='" + keyRemoteJid + "' LIMIT 1", null);
+            Cursor c = whatsappDb.rawQuery("SELECT subject FROM chat JOIN jid ON chat.jid_row_id=jid._id WHERE jid.raw_string='" + keyRemoteJid + "' LIMIT 1", null);
             if (c != null) {
                 if (c.moveToFirst()) {
                     do {
