@@ -73,7 +73,7 @@
   </string>
   <string name="ImportFragment_import_whatsapp_backup_elipse">Importing whatsapp backup...</string>
   <string name="import_fragment__import_whatsapp_backup">Import Whatsapp backup</string>
-  <string name="import_fragment__import_whatsapp_backup_file">Import a Whatsapp db file. place mstore.db at ...</string>
+  <string name="import_fragment__import_whatsapp_backup_file">Import a Whatsapp db file. Place msgstore.db in the root directory</string>
   <string name="import_fragment__import_whatsapp_import_media">Import media messages</string>
   <string name="import_fragment__import_whatsapp_import_groups">Import group chats if Signal group with the same name exists</string>
   <string name="import_fragment__import_whatsapp_avoid_duplicates">Avoid duplicate messages</string>
