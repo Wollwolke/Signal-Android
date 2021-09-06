@@ -76,12 +76,16 @@ public class WhatsappBackup {
                         String name = filePath;
                         if (type.equals("image/jpeg")) {
                             Attachment attachment = new UriAttachment(uri, MediaUtil.IMAGE_JPEG, AttachmentDatabase.TRANSFER_PROGRESS_DONE,
-                                    size, name, false, false, false, null, null, null, null, null);
+                                    size, name, false, false, false, false, item.getMediaCaption(), null, null, null, null);
                             attachments.add(attachment);
                         } else if (type.equals("video/mp4")) {
                             Attachment attachment = new UriAttachment(uri, MediaUtil.VIDEO_MP4, AttachmentDatabase.TRANSFER_PROGRESS_DONE,
-                                    size, name, false, false, false, null, null, null, null, null);
+                                    size, name, false, false, false, false, item.getMediaCaption(), null, null, null, null);
                             attachments.add(attachment);
+                        } else if (type.equals("audio/ogg; codecs=opus")) {
+                        Attachment attachment = new UriAttachment(uri, MediaUtil.AUDIO_UNSPECIFIED, AttachmentDatabase.TRANSFER_PROGRESS_DONE,
+                                size, name, true, false, false, false, null, null, null, null, null);
+                        attachments.add(attachment);
                         } else {
                             return attachments; // Ignore everything that is not an image or a video for the moment
                         }
@@ -132,6 +136,7 @@ public class WhatsappBackup {
                         item.transport     = "Data";
                         item.mediaWaType   = c.getInt(c.getColumnIndex("media_wa_type"));
                         item.waMessageId   = c.getLong(c.getColumnIndex("_id"));
+                        item.mediaCaption  = c.getString(c.getColumnIndex("media_caption"));
                     }
                     while (c.moveToNext());
                 }
@@ -182,6 +187,7 @@ public class WhatsappBackup {
         private String groupName; // SW: added
         private int mediaWaType; // SW: added
         private long waMessageId; // SW: added
+        private String mediaCaption;
 
         public WhatsappBackupItem() {}
 
@@ -263,5 +269,9 @@ public class WhatsappBackup {
         }
 
         public String getTransport() { return transport; } // JW: added
+
+        public String getMediaCaption() {
+            return mediaCaption;
+        }
     }
 }
